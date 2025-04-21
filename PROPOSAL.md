@@ -46,6 +46,8 @@ Fit-sync is an app that allows users to track their workouts, share their workou
 ![Fitness_Tracker_ERD](https://github.com/user-attachments/assets/0195dd6a-158d-4d61-9fa0-7f0572e5b749)
 
 
+![Users_Feed](https://github.com/user-attachments/assets/dee1ff65-00d4-4062-ac36-8a3bc878c7fc)
+
 # Wireframe
 - ![Landing_Page](https://github.com/user-attachments/assets/d909134a-ec97-4a18-ae29-fbec39eabdee)
 - ![Registration_Profile](https://github.com/user-attachments/assets/a53b3c47-a72f-4d0c-ac31-8a3efed67ea3)
