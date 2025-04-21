@@ -13,6 +13,11 @@ Fit-sync is an app that allows users to track their workouts, share their workou
 - As a user,I want to be able to like and comment other users workouts
 - As a user, I want to be able to customize my profile so that I can add my personal information
 
+# Stretch goals
+- As a user, I want to be able to see the progress of my health so that I know that the workouts affect my progress
+- As a user, I want to Comment on someones comment so that I can reply to other users' comments
+- As a user, I want to be able to access query recommended workouts.
+
 # Routes
 
 | **Route**                             | **Method** | **Description**                    |
@@ -42,7 +47,20 @@ Fit-sync is an app that allows users to track their workouts, share their workou
 
 
 # Wireframe
+- ![Landing_Page](https://github.com/user-attachments/assets/d909134a-ec97-4a18-ae29-fbec39eabdee)
+- ![Registration_Profile](https://github.com/user-attachments/assets/a53b3c47-a72f-4d0c-ac31-8a3efed67ea3)
+- ![Dashboard](https://github.com/user-attachments/assets/4104cd48-0aa4-4858-9d03-5fb1d09e04d0)
+- ![Specific_Workout](https://github.com/user-attachments/assets/e7a450dd-6288-4fbf-bf44-273cc8afba84)
+- ![Add_Workout](https://github.com/user-attachments/assets/cc524b8c-e4a6-4b85-8b7b-cc0d1adacd14)
+- ![Users_Feed](https://github.com/user-attachments/assets/2635dd7c-6527-4332-891a-c7382d03ddbc)
+
 - 
+
+
+
+
+
+
 
 
 
