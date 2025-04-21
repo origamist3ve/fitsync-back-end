@@ -20,12 +20,11 @@ Fit-sync is an app that allows users to track their workouts, share their workou
 
 # Routes
 
+
 | **Route**                             | **Method** | **Description**                    |
 | ------------------------------------- | ---------- | ---------------------------------- |
 | `/`                                   | GET        | Show the landing page              |
-| `/register`                           | GET        | Show user registration form        |
 | `/register`                           | POST       | Register a new user                |
-| `/login`                              | GET        | Show login form                    |
 | `/login`                              | POST       | Authenticate user & start session  |
 | `/logout`                             | GET        | Log out and destroy session        |
 | `/dashboard`                          | GET        | Show user’s teams                  |
@@ -38,6 +37,7 @@ Fit-sync is an app that allows users to track their workouts, share their workou
 | `/feed/:workoutId`                    | GET        | Display the specific users workout |
 | `/feed/:workoutId`                    | POST       | Post a comment to the feed         |
 | `/feed/:workoutId`                    | EDIT       | Edit the comment                   |
+
 
 # Component Hierarchy 
 <img width="1131" alt="UpdatedHierarchy" src="https://github.com/user-attachments/assets/472464ae-68f6-46ae-b590-843e58c82b7d" />
