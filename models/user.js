@@ -1,25 +1,28 @@
 import mongoose, {Schema} from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    name: {
+    username: {
         type: String,
         required: true,
     },
-    password: {
-        type: Number,
-        min: 0,
+    hashedPassword: {
+        type: String,
         required: true,
     },
     profile: {
         type: Schema.Types.ObjectId,
-        ref: "profile",
-        required: true,
+        ref: "profile"
     },
     workout: {
         type: Schema.Types.ObjectId,
-        ref: "workout",
-        required: true,
+        ref: "workout"
     }
 });
+
+userSchema.set("toJSON", {
+    transform: (document, returnedObject) => {
+        delete returnedObject.hashedPassword;
+    }
+})
 
 export default mongoose.model("User", userSchema);

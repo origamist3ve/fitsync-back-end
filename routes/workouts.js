@@ -2,7 +2,7 @@ import {Router} from 'express';
 import Workout from "../models/workout.js";
 // import * as workoutController from '../controllers/workouts';
 
-const router = express.Router();
+const router = Router();
 
 router.get("/", async (req, res) => {
     try{

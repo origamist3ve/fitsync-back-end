@@ -26,31 +26,61 @@ export const getUser = async (req, res) => {
         }
 
         res.json({user})
+    } catch (err) {
+        res.status(500).json({err: err.message})
+    }
+}
+
+export const signUp = async (req, res) => {
+    try{
+        const userInDatabase = await User.findOne({username: req.body.username})
+
+        if (userInDatabase) {
+            return res.status(400).json({err: "Choose a different username"})
+        }
+        const user = await User.create( {
+            username: req.body.username,
+            hashedPassword: bcrypt.hashSync(
+                req.body.password,
+                Number(process.env.SALT_ROUNDS)
+            ),
+        })
+
+        // TODO create a profile and put it on the new user
+
+        const payload = {username: user.username, _id: user._id}
+
+        const token = jwt.sign({payload}, process.env.JWT_SECRET)
+
+        res.status(201).json({token})
+    }
+    catch(err){
+        res.status(500).json({err})
+    }
+}
+
+export const signIn = async (req, res) => {
+    try {
+        const user = await User.findOne({username: req.body.username})
+        if (!user) {
+            return res.status(403).json({err: "Invalid credentials"})
+        }
+        const isPasswordCorret = bcrypt.compareSync(
+            req.body.password,
+            user.hashedPassword
+        )
+        if (!isPasswordCorret) {
+            return res.status(403).json({err: "Invalid Credentials"})
+        }
+
+        const payload = {username: user.username, _id: user._id}
+        const token = jwt.sign({payload}, process.env.JWT_SECRET)
+
+        res.status(201).json({token})
+        console.log("wlecome")
     }
     catch(err){
         res.status(500).json({err: err.message})
-    }
 
-    export const signup = async (req, res) => {
-        try{
-            const userInDatabase = await User.findOne({username: req.body.username})
-            if (userInDatabase) {
-                return res.status(400).json({err: "Choose a different username"})
-            }
-            const user = await User.create( {
-                username: req.body.username,
-                hashedPassword: bcrypt.hashSync(
-                    req.body.password,
-                    Number(process.env.SALT_ROUNDS)
-                ),
-            })
-            const payload = {username: user.username, _id: user._id}
-
-            const token = jwt.sign({payload}, process.env.JWT_SECRET)
-            res.status(201).json({token})
-        }
-        catch(err){
-            res.status(500).json({error})
-        }
     }
 }
