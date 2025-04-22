@@ -1,4 +1,5 @@
 import express from 'express';
+import {Router} from 'express';
 import { getWorkouts, getWorkout } from "../controllers/workouts.js";
 // import * as workoutController from '../controllers/workouts';
 
