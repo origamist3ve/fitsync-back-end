@@ -1,6 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 
-const petSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -22,4 +22,4 @@ const petSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model("pets", petSchema);
+export default mongoose.model("User", userSchema);
