@@ -13,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(logger("dev"));
 
+//sets up original route
 app.use("/api", routes);
 
 app.use("/workout", workoutsRouter);

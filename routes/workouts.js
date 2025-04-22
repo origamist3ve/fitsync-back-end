@@ -2,7 +2,7 @@ import express from 'express';
 import { getWorkouts, getWorkout } from "../controllers/workouts.js";
 // import * as workoutController from '../controllers/workouts';
 
-const router = express.Router();
+const router = Router();
 
 router.get("/", getWorkouts);
 
