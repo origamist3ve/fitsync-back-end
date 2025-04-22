@@ -1,29 +1,22 @@
+import express from 'express';
+<<<<<<< HEAD
+import { Router } from 'express';
+import { getWorkouts, getWorkout, createWorkout } from "../controllers/workouts.js";
+import verifyToken from "../middleware/verify-token.js";
+ 
+const router = Router();
+
+=======
 import {Router} from 'express';
-import Workout from "../models/workout.js";
+import { getWorkouts, getWorkout } from "../controllers/workouts.js";
 // import * as workoutController from '../controllers/workouts';
 
 const router = Router();
+>>>>>>> e5b0b5e44b131747ab6082ea0a796636df39cbf8
 
-router.get("/", async (req, res) => {
-    try{
-        const workouts =await Workout.find().populate("userId","username");
-        res.status(200).json(workouts);
-    } catch (err) {
-        res.status(500).json({ message: "Failed to fetch workouts", error: err});
-    }
-});
+router.post("/", createWorkout);
+router.get("/", getWorkouts);
+router.get("/:workoutId", getWorkout);
 
-router.get("/:workoutId", async (req,res) => {
-    const { workoutId } = req.params;
-    try{
-        const workout = await Workout.findById(workoutId).populate("userId", "username");
-        if (!workout) {
-            return res.status(404).json({message: "Workout not found"});
-        }
-        res.status(200).json(workout);
-    } catch (err) {
-        res.status(500).json({ message: "Failed to fetch workout", error: err });
-    }
-});
 
 export default router;
