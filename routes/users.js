@@ -7,4 +7,5 @@ const router = Router();
 router.get("/", controllers.getUsers);
 router.get("/:userId", controllers.getUser)
 
+
 export default router;
