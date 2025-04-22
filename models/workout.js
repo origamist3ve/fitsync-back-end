@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
 const workoutSchema = new mongoose.Schema(
     {
@@ -49,6 +49,4 @@ const workoutSchema = new mongoose.Schema(
     }
 );
 
-const Workout = mongoose.model("Workout", workoutScehma);
-
-export default Workout;
+const Workout = mongoose.model("Workout", workoutSchema);
