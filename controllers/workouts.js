@@ -2,6 +2,7 @@ import Workout from "../models/workout.js";
 
 export const getWorkouts = async (req, res) => {
     try {
+        // Verify type of id being used with user
         const workouts = await Workout.find().populate("userId", "username");
         res.json(workouts);
     } catch (err) {
