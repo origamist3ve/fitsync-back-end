@@ -1,4 +1,5 @@
 import Workout from "../models/workout.js";
+import User from "../models/user.js";
 
 export const getWorkouts = async (req, res) => {
     try {
@@ -26,17 +27,25 @@ export const getWorkout = async (req, res) => {
 
 export const createWorkout = async (req, res) => {
     try{
-        const newWorkout = await Workout.create({
-            workoutType: req.body.workoutType,
-            workout: req.body.workout,
-            duration: req.body.duration,
-            date: req.body.date,
-            // userId: req.user._id,
-        });
-        newWorkout.save()
-        res.status(201).json(newWorkout);
-    } catch (err) {
+        console.log("Sup")
+        const userId = req.user._id
+        const {workoutType, workout, duration, date} = req.body
 
+        const newWorkout = new Workout({
+            user: userId,
+            workoutType,
+            workout,
+            duration,
+            date,
+        });
+
+        const savedWorkout = await newWorkout.save()
+        await User.findByIdAndUpdate(userId, {
+            workout: savedWorkout._id,
+        })
+        res.status(201).json(savedWorkout);
+    }
+    catch (err) {
         res.status(400).json({ err: err.message });
     }
 };
