@@ -1,5 +1,6 @@
 import "dotenv/config";
 import User from "../models/user.js";
+import Profile from "../models/profile.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -82,5 +83,31 @@ export const signIn = async (req, res) => {
     catch(err){
         res.status(500).json({err: err.message})
 
+    }
+}
+
+export const createProfile = async (req, res) => {
+    try{
+        const userId = req.user._id
+        const {name, gender, age, weight, height, experienceLevel} = req.body
+
+        const newProfile = new Profile({
+            user: userId,
+            name,
+            gender,
+            age,
+            weight,
+            height,
+            experienceLevel,
+        })
+        const savedProfile = await newProfile.save()
+        await User.findByIdAndUpdate(userId, {
+            profile: savedProfile._id,
+        })
+        res.status(201).json(savedProfile);
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).json({ message: "Failed to create profile." });
     }
 }
