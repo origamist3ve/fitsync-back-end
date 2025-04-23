@@ -40,3 +40,39 @@ export const createWorkout = async (req, res) => {
     }
 };
 
+export const updateWorkout = async (req, res) => {
+    try {
+        const workout = await Workout.findById(req.params.workoutId);
+
+        if (!workout) return res.status(404).json({ err: "Workout not found" });
+        if (String(workout.userId) !== req.user._id) {
+            return res.status(403).json({ err: "Not authorized" });
+        }
+
+        workout.workoutType = req.body.workoutType || workout.workoutType;
+        workout.workout = req.body.workout || workout.workout;
+        workout.duration = req.body.duration || workout.duration;
+        workout.date = req.body.date || workout.date;
+
+        await workout.save();
+
+        res.json(workout);
+        } catch (err) {
+          res.status(400).json({ err: err.message });  
+        }   
+};
+
+export const deleteWorkout = async (req, res) => {
+    try {
+        const workout = await Workout.findById(req.params.workoutId);
+        if (!workout) return res.status(404).json({ err: "Workout not found" });
+        if (String(workout.userId) !== req.user._id) {
+            return res.status(403).json({ err: "Not authorized"});
+        }
+
+        await workout.deleteOne();
+        res.json({ message: "Workout deleted" });
+     } catch (err) {
+        res.status(400).json({ err: err.message });
+     }
+};
