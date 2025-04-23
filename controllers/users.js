@@ -92,6 +92,7 @@ export const createProfile = async (req, res) => {
         const {name, gender, age, weight, height, experienceLevel} = req.body
 
         const newProfile = new Profile({
+            user: userId,
             name,
             gender,
             age,
