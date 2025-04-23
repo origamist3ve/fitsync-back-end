@@ -4,10 +4,11 @@ import verifyToken from "../middleware/verify-token.js";
 
 const router = Router();
 
-router.get("/", controllers.getUsers);
+router.get("/",controllers.getUsers);
+router.post("/profile",controllers.createProfile)
 router.post("/sign-up",controllers.signUp)
 router.post("/sign-in",controllers.signIn)
-router.get("/:userId", controllers.getUser)
+router.get("/:userId",verifyToken, controllers.getUser)
 
 
 
