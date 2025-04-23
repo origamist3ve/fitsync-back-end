@@ -1,9 +1,10 @@
 import Workout from "../models/workout.js";
+import User from "../models/user.js";
 
 export const getWorkouts = async (req, res) => {
     try {
         // Verify type of id being used with user
-        const workouts = await Workout.find().populate("userId", "username");
+        const workouts = await Workout.find().populate("user", "username");
         res.json(workouts);
     } catch (err) {
         res.status(500).json({ err: err.message });
@@ -13,7 +14,7 @@ export const getWorkouts = async (req, res) => {
 
 export const getWorkout = async (req, res) => {
     try {
-        const workout = await Workout.findById(req.params.workoutId).populate("userId", "username");
+        const workout = await Workout.findById(req.params.workoutId).populate("user", "username");
     
         if (!workout) {
             return res.status(404).json({ err: "Workout not found "});
@@ -26,18 +27,62 @@ export const getWorkout = async (req, res) => {
 
 export const createWorkout = async (req, res) => {
     try{
-        const newWorkout = await Workout.create({
-            workoutType: req.body.workoutType,
-            workout: req.body.workout,
-            duration: req.body.duration,
-            date: req.body.date,
-            // userId: req.user._id,
-        });
-        newWorkout.save()
-        res.status(201).json(newWorkout);
-    } catch (err) {
+        console.log("Sup")
+        const userId = req.user._id
+        const {workoutType, workout, duration, date} = req.body
 
+        const newWorkout = new Workout({
+            user: userId,
+            workoutType,
+            workout,
+            duration,
+            date,
+        });
+
+        const savedWorkout = await newWorkout.save()
+        await User.findByIdAndUpdate(userId, {
+            workout: savedWorkout._id,
+        })
+        res.status(201).json(savedWorkout);
+    }
+    catch (err) {
         res.status(400).json({ err: err.message });
     }
 };
 
+export const updateWorkout = async (req, res) => {
+    try {
+        const workout = await Workout.findById(req.params.workoutId);
+
+        if (!workout) return res.status(404).json({ err: "Workout not found" });
+        if (String(workout.user) !== req.user._id) {
+            return res.status(403).json({ err: "Not authorized" });
+        }
+
+        workout.workoutType = req.body.workoutType || workout.workoutType;
+        workout.workout = req.body.workout || workout.workout;
+        workout.duration = req.body.duration || workout.duration;
+        workout.date = req.body.date || workout.date;
+
+        await workout.save();
+
+        res.json(workout);
+        } catch (err) {
+          res.status(400).json({ err: err.message });
+        }
+};
+
+export const deleteWorkout = async (req, res) => {
+    try {
+        const workout = await Workout.findById(req.params.workoutId);
+        if (!workout) return res.status(404).json({ err: "Workout not found" });
+        if (String(workout.user) !== req.user._id) {
+            return res.status(403).json({ err: "Not authorized"});
+        }
+
+        await workout.deleteOne();
+        res.json({ message: "Workout deleted" });
+     } catch (err) {
+        res.status(400).json({ err: err.message });
+     }
+};
