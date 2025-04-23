@@ -4,7 +4,7 @@ import User from "../models/user.js";
 export const getWorkouts = async (req, res) => {
     try {
         // Verify type of id being used with user
-        const workouts = await Workout.find().populate("userId", "username");
+        const workouts = await Workout.find().populate("user", "username");
         res.json(workouts);
     } catch (err) {
         res.status(500).json({ err: err.message });
@@ -14,7 +14,7 @@ export const getWorkouts = async (req, res) => {
 
 export const getWorkout = async (req, res) => {
     try {
-        const workout = await Workout.findById(req.params.workoutId).populate("userId", "username");
+        const workout = await Workout.findById(req.params.workoutId).populate("user", "username");
     
         if (!workout) {
             return res.status(404).json({ err: "Workout not found "});
@@ -55,7 +55,7 @@ export const updateWorkout = async (req, res) => {
         const workout = await Workout.findById(req.params.workoutId);
 
         if (!workout) return res.status(404).json({ err: "Workout not found" });
-        if (String(workout.userId) !== req.user._id) {
+        if (String(workout.user) !== req.user._id) {
             return res.status(403).json({ err: "Not authorized" });
         }
 
@@ -68,15 +68,15 @@ export const updateWorkout = async (req, res) => {
 
         res.json(workout);
         } catch (err) {
-          res.status(400).json({ err: err.message });  
-        }   
+          res.status(400).json({ err: err.message });
+        }
 };
 
 export const deleteWorkout = async (req, res) => {
     try {
         const workout = await Workout.findById(req.params.workoutId);
         if (!workout) return res.status(404).json({ err: "Workout not found" });
-        if (String(workout.userId) !== req.user._id) {
+        if (String(workout.user) !== req.user._id) {
             return res.status(403).json({ err: "Not authorized"});
         }
 
