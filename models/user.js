@@ -11,12 +11,12 @@ const userSchema = new mongoose.Schema({
     },
     profile: {
         type: Schema.Types.ObjectId,
-        ref: "profile"
+        ref: "Profile"
     },
-    workout: {
+    workout: [{
         type: Schema.Types.ObjectId,
-        ref: "workout"
-    }
+        ref: "Workout"
+    }]
 });
 
 userSchema.set("toJSON", {

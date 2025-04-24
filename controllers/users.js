@@ -15,18 +15,36 @@ export const getUsers = async (req, res) => {
     }
 }
 
+
+
+export const getUserWorkouts = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId).populate("workouts");
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.json(user.workouts);
+        console.log(user.workouts)
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+
 export const getUser = async (req, res) => {
     try {
         if (req.user._id !== req.params.userId) {
             return res.status(403).json({err: "Not Authorized"})
         }
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.params.userId).populate("workout")
 
         if (!user) {
             return res.status(403).json({err: "User Not Found"})
         }
 
-        res.json({user})
+        res.json(user)
     } catch (err) {
         res.status(500).json({err: err.message})
     }

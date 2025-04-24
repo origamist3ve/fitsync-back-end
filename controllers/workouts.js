@@ -15,6 +15,7 @@ export const getWorkouts = async (req, res) => {
 export const getWorkout = async (req, res) => {
     try {
         const workout = await Workout.findById(req.params.workoutId).populate("user", "username");
+        console.log(req.params.workoutId);
     
         if (!workout) {
             return res.status(404).json({ err: "Workout not found "});
@@ -41,7 +42,8 @@ export const createWorkout = async (req, res) => {
 
         const savedWorkout = await newWorkout.save()
         await User.findByIdAndUpdate(userId, {
-            workout: savedWorkout._id,
+            //push a new workout instead of saving and replacing the previous one
+            $push: {workout: savedWorkout._id},
         })
         res.status(201).json(savedWorkout);
     }
