@@ -32,6 +32,34 @@ export const getUserWorkouts = async (req, res) => {
     }
 };
 
+import Workout from "../models/workout.js"; // ⬅️ make sure you import this if not already
+
+export const deleteUserWorkout = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { workoutId } = req.params;
+
+        // Remove the workout from the workouts collection
+        const deletedWorkout = await Workout.findOneAndDelete({
+            _id: workoutId,
+            user: userId, // ensure only the owner can delete
+        });
+
+        if (!deletedWorkout) {
+            return res.status(404).json({ error: "Workout not found or not authorized" });
+        }
+
+        // Remove the workout reference from the user
+        await User.findByIdAndUpdate(userId, {
+            $pull: { workouts: workoutId },
+        });
+
+        res.status(200).json({ message: "Workout deleted successfully" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 
 export const getUser = async (req, res) => {
     try {

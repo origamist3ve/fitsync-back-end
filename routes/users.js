@@ -11,6 +11,7 @@ router.post("/sign-up", controllers.signUp)
 router.post("/sign-in", controllers.signIn)
 router.get("/:userId",verifyToken,injectUserId, controllers.getUser)
 router.get("/:userId/workouts",verifyToken, injectUserId,controllers.getUserWorkouts);
+router.delete("/:userId/workouts/:workoutId", verifyToken, injectUserId, controllers.deleteUserWorkout);
 
 
 
