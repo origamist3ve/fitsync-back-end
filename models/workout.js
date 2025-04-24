@@ -27,7 +27,7 @@ const workoutSchema = new mongoose.Schema(
         type: Number,
         default: 0,
      }, 
-     //comments is a work in progress
+     
      comments: [
         {
             text: String,
@@ -48,4 +48,3 @@ const workoutSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("Workout", workoutSchema);
-
