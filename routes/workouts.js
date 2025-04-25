@@ -7,8 +7,9 @@ const router = Router();
 router.get("/",controllers.getWorkouts);
 router.get("/:workoutId", controllers.getWorkout);
 router.post("/",verifyToken, controllers.createWorkout);
-router.put("/:workoutId",verifyToken, controllers.updateWorkout)
-router.delete("/:workoutId",verifyToken, controllers.deleteWorkout)
+router.post("/:workoutId/comments", verifyToken, controllers.addComment);
+router.put("/:workoutId",verifyToken, controllers.updateWorkout);
+router.delete("/:workoutId",verifyToken, controllers.deleteWorkout);
 
 
 
