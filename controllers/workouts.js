@@ -3,7 +3,7 @@ import User from "../models/user.js";
 
 export const getWorkouts = async (req, res) => {
   try {
-    const workouts = await Workout.find().populate("user", "username");
+    const workouts = await Workout.find().populate("user", "username").populate("comments.author", "username");
     res.json(workouts);
   } catch (err) {
     res.status(500).json({ err: err.message });
