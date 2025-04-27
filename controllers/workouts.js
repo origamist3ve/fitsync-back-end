@@ -31,7 +31,7 @@ export const createWorkout = async (req, res) => {
   try {
     console.log("Sup");
     const userId = req.user._id;
-    const { workoutType, workout, duration, date } = req.body;
+    const { workoutType, workout, duration, date, sets } = req.body;
 
     const newWorkout = new Workout({
       user: userId,
@@ -39,6 +39,7 @@ export const createWorkout = async (req, res) => {
       workout,
       duration,
       date,
+      sets,
     });
 
     const savedWorkout = await newWorkout.save();
@@ -63,6 +64,7 @@ export const updateWorkout = async (req, res) => {
     workout.workoutType = req.body.workoutType || workout.workoutType;
     workout.workout = req.body.workout || workout.workout;
     workout.duration = req.body.duration || workout.duration;
+    workout.sets = req.body.sets || workout.sets;
     workout.date = req.body.date || workout.date;
 
     await workout.save();

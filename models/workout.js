@@ -23,11 +23,15 @@ const workoutSchema = new mongoose.Schema(
         ref: "User",
         required: true,
      },
+        //Add likes
      likes: {
         type: Number,
         default: 0,
-     }, 
-     
+     },
+        sets: {
+         type: Number,
+            required: true,
+        },
      comments: [
         {
             text: String,
