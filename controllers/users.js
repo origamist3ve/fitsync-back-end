@@ -64,11 +64,11 @@ export const updateUserWorkout = async (req, res) => {
     try{
         const userId = req.user._id;
         const {workoutId} = req.params;
-        const {workoutType, workout, duration, date} = req.body;
+        const {workoutType, workout, duration, date, sets} = req.body;
 
         const updateWorkout = await Workout.findOneAndUpdate (
             {_id: workoutId, user: userId },
-            {workoutType, workout, duration, date},
+            {workoutType, workout, duration, date, sets},
             {new:true}
         )
         if (!updateWorkout) {
