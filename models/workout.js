@@ -23,7 +23,7 @@ const workoutSchema = new mongoose.Schema(
         ref: "User",
         required: true,
      },
-        //Add likes
+        
      likes: {
         type: Number,
         default: 0,

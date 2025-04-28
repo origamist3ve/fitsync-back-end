@@ -32,24 +32,24 @@ export const getUserWorkouts = async (req, res) => {
     }
 };
 
-import Workout from "../models/workout.js"; // ⬅️ make sure you import this if not already
+import Workout from "../models/workout.js"; 
 
 export const deleteUserWorkout = async (req, res) => {
     try {
         const userId = req.user._id;
         const { workoutId } = req.params;
 
-        // Remove the workout from the workouts collection
+        
         const deletedWorkout = await Workout.findOneAndDelete({
             _id: workoutId,
-            user: userId, // ensure only the owner can delete
+            user: userId, 
         });
 
         if (!deletedWorkout) {
             return res.status(404).json({ error: "Workout not found or not authorized" });
         }
 
-        // Remove the workout reference from the user
+        
         await User.findByIdAndUpdate(userId, {
             $pull: { workouts: workoutId },
         });
@@ -116,7 +116,7 @@ export const signUp = async (req, res) => {
             ),
         })
 
-        // TODO create a profile and put it on the new user
+       
 
         const payload = {username: user.username, _id: user._id}
 
@@ -181,7 +181,6 @@ export const createProfile = async (req, res) => {
     }
 }
 
-// src/controllers/users.js
 
 export const updateProfile = async (req, res) => {
     try {
