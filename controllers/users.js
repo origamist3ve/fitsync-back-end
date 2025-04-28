@@ -87,7 +87,7 @@ export const getUser = async (req, res) => {
         if (req.user._id !== req.params.userId) {
             return res.status(403).json({err: "Not Authorized"})
         }
-        const user = await User.findById(req.params.userId).populate("workout")
+        const user = await User.findById(req.params.userId).populate("workout").populate("profile");
         console.log(req.user._id);
 
 
@@ -180,3 +180,27 @@ export const createProfile = async (req, res) => {
         res.status(500).json({ message: "Failed to create profile." });
     }
 }
+
+// src/controllers/users.js
+
+export const updateProfile = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { name, gender, age, weight, height, experienceLevel } = req.body;
+
+        const updatedProfile = await Profile.findOneAndUpdate(
+            { user: userId },
+            { name, gender, age, weight, height, experienceLevel },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedProfile) {
+            return res.status(404).json({ error: "Profile not found" });
+        }
+
+        res.status(200).json(updatedProfile);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to update profile." });
+    }
+};

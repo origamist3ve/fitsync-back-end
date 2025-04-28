@@ -22,7 +22,7 @@ const profileSchema = new mongoose.Schema({
         required: true
     },
     weight: {
-        type: Number, 
+        type: Number,
         min: 0,
         required: true
     },
@@ -38,4 +38,4 @@ const profileSchema = new mongoose.Schema({
     },
 });
 
-export default mongoose.model("profile", profileSchema);
+export default mongoose.model("Profile", profileSchema);
